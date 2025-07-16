@@ -1,0 +1,57 @@
+1# Install Virtualenv
+pip install virtualenv
+
+C:\Users\FARiD\Desktop\django-g12\school>
+1 - virtualenv venv
+or 
+2 - python -m venv venv
+---------------------------------
+
+C:\Users\FARiD\Desktop\django-g12\school>
+
+venv\Scripts\activate
+output
+(venv) C:\Users\FARiD\Desktop\django-g12\school>
+
+---------------------------------
+pip freeze (check installed packages)
+---------------------------------
+# install django
+pip install django==5.0.0
+pip install django
+
+---------------------------------
+pip freeze (check installed packages)
+output :
+asgiref==3.9.0 realtime chat
+Django==5.2.4  
+sqlparse==0.5.3 sqlparse queries ORM - deal with databases
+tzdata==2025.2 timezone -> formats
+
+------------
+
+django-admin startproject school .
+
+--------------
+
+wsgi / asgi 
+deployment servers
+
+settings.py
+urls.py
+
+-------------
+
+python manage.py startapp core
+python manage.py startapp adds
+
+------------
+
+register in installed apps 
+settings.py
+
+
+MVT -> Models (Databases - Tables) - Views (controller - logic - functions) -  Templates (page - html)
+MVC -> Models Views Controllers
+
+
