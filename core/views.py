@@ -5,6 +5,10 @@ from django.shortcuts import HttpResponse
 """
 Students - courses - exams
 """
+# login() function built in django - operation login (authetication)
+# login page to display the html login page
+def login_page(request):
+    return render(request, 'login.html')
 
 def home_page(request):
     # return HttpResponse('Home Page')
