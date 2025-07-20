@@ -75,23 +75,35 @@ WSGI_APPLICATION = 'school.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-import pymysql
-
-pymysql.install_as_MySQLdb()
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3', # mysql - #sqlserve - #oracle - postgresql
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+    ############ SQLITE ##############
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # mysql - #sqlserve - #oracle - postgresql
-        'NAME': 'school',
-        'USER' : 'root',
-        'PASSWORD' : '',
-        'HOST': 'localhost',
-        'PORT' : '3306',
+        'ENGINE': 'django.db.backends.sqlite3', # mysql - #sqlserve - #oracle - postgresql
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+    ############ MySql ##############
+    # pip install pymysql
+    #import pymysql
+    # pymysql.install_as_MySQLdb()
+    # 'default' : {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'school',
+    #     'USER' : 'root',
+    #     'PASSWORD' : '1234',
+    #     'HOST' : '127.0.0.1', # localhost 
+    #     'PORT' : '3306'
+    # }
+    ############ Postgresql ##############
+    # pip install psycopg2
+    # 'default' : {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'school',
+    #     'USER' : 'postgres',
+    #     'PASSWORD' : '123',
+    #     'HOST' : 'localhost', # localhost 
+    #     'PORT' : '5432'
+    # }
 }
 
 # Password validation
