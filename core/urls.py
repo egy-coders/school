@@ -8,4 +8,5 @@ urlpatterns = [
     path('course/<int:id>/', course, name='course'),
     path('profile/', student_profile, name='student_profile'),
     path('login/', login_page, name='login'),
+    path('courses/<str:course_title>/', course, name='course'),
 ]

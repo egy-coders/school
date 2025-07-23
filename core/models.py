@@ -54,6 +54,8 @@ course1 = Course.objetcs.get(id=1)
 course1.student_set.all() # default related_name
 course1.students.all() # related_name = students
 
+through=""
+
 """
 
 class Cat(models.Model): # Parent Super One side
@@ -71,6 +73,10 @@ class Course(models.Model): # Many Side - child
     cat = models.ForeignKey(Cat, on_delete=models.SET_NULL, related_name="courses", null=True) # cat_id
     title = models.CharField(max_length=200)
     level = models.CharField(choices=LEVEL_CHOICES)
+    description = models.TextField(null=True, blank=True)
+    price = models.IntegerField()
+    featured = models.BooleanField(default=False) # course not featured
+    image = models.ImageField(upload_to='course_images', null=True, blank=True)
     # students = 
 
     def __str__(self):
@@ -87,12 +93,24 @@ class Student(models.Model):
     name = models.CharField(max_length=200)
     dob = models.DateField(blank=True, null=True)
     grade = models.CharField(choices=GRADE_CHOICES)
-    courses = models.ManyToManyField(Course, related_name='students')
-
-    
+    courses = models.ManyToManyField(Course, through='StudentCourse', related_name='students')
 
     def __str__(self):
         return f"{self.name}"
+
+class StudentCourse(models.Model): 
+    # id
+    student = models.ForeignKey(Student, on_delete=models.CASCADE) # student_id 
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)   # course_id
+    score = models.DecimalField(max_digits=5, decimal_places=2) # 100.00
+
+    class Meta: # options 
+        verbose_name = 'Enrollement'
+        unique_together = ('student', 'course')
+
+
+    def __str__(self):
+        return f"{self.student} - {self.course} - {self.score}"
 
 class Profile(models.Model):
     student = models.OneToOneField(Student, on_delete=models.CASCADE)
