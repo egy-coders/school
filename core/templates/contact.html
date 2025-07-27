@@ -5,16 +5,35 @@
 <hr>
 
 <div class="container d-felx align-items-center">
-    <div class="col-md-6">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="col-md-6">
+            <div class="mb-3">
+                <label for="name">Full Name</label>
+                <input type="text" name="name" id="name" class="form-control" placeholder="asdsadasd">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                <input type="email" name="email" class="form-control" id="exampleFormControlInput1"
+                    placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="phone">Phone</label>
+                <input type="text" name="phone" id="phone" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Message</label>
+                <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="date">Publish Date</label>
+                <input type="datetime-local" name="date" id="date" class="form-control">
+            </div>
 
-        <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            <div class="my-2">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-    </div>
+    </form>
 </div>
 {% endblock content %}

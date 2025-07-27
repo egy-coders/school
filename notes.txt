@@ -55,3 +55,26 @@ MVT -> Models (Databases - Tables) - Views (controller - logic - functions) -  T
 MVC -> Models Views Controllers
 
 
+-------------------------
+handle Media Files
+1 - pip install pillow
+2 - create media folder on root dir
+3 - settings.py conf     
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # point to media location on local storage
+4 - urls.py
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+5 - models.py (add image field)
+
+-------------------------
+Forms
+
+Get http://localhost:8000
+
+Post http://localhost:8000/create-message/ 
+payload = {
+'name':'farid',
+'email':'farid@gmail.com'
+}
+Put / Patch 
+Delete / id pk

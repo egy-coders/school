@@ -1,4 +1,5 @@
 from django.db import models
+from django_cleanup import cleanup
 
 """
 Network one (category) - many (courses)  (CCNA - MSCE - Networking)
@@ -70,18 +71,23 @@ class Course(models.Model): # Many Side - child
         ('intermediate', 'intermediate'),
         ('advanced', 'advanced'),
     )
-    cat = models.ForeignKey(Cat, on_delete=models.SET_NULL, related_name="courses", null=True) # cat_id
+    cat = models.ForeignKey(Cat, on_delete=models.SET_NULL, related_name="courses", null=True, blank=True) # cat_id
     title = models.CharField(max_length=200)
     level = models.CharField(choices=LEVEL_CHOICES)
     description = models.TextField(null=True, blank=True)
     price = models.IntegerField()
     featured = models.BooleanField(default=False) # course not featured
     image = models.ImageField(upload_to='course_images', null=True, blank=True)
+    publish_on = models.DateTimeField()
+
     # students = 
+
+
 
     def __str__(self):
         return f"{self.title}"
-    
+
+@cleanup.ignore
 class Student(models.Model):
     GRADE_CHOICES = (
         ('1st','1st'),

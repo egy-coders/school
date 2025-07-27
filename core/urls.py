@@ -9,4 +9,7 @@ urlpatterns = [
     path('profile/', student_profile, name='student_profile'),
     path('login/', login_page, name='login'),
     path('courses/<str:course_title>/', course, name='course'),
+
+
+    path('create-course/', create_course, name='create_course'),
 ]

@@ -4,11 +4,16 @@
 {% block content %}
 <div class="container">
     <div class="card mb-3">
-        <img src="" class="card-img-top" alt="...">
+        {% if course.image %}
+        <img src="{{course.image.url}}" class="card-img-top" alt="course image ..." height="250" width="350">
+        {% else %}
+        <img src="{% static 'img/default.png' %}" alt="" width="300">
+        {% endif %}
         <div class="card-body">
             <h5 class="card-title">{{course.title}}</h5>
             <p class="card-text">{{course.description}}</p>
             <p class="card-text"><small class="text-muted">{{course.price}} $</small></p>
+            <p class="card-text"><small class="text-muted">Pub_date: {{course.publish_on}}</small></p>
         </div>
     </div>
 </div>

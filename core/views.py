@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.shortcuts import HttpResponse
 from .models import *
+from .forms import *
 
 # Create your views (controller) here.
 """
@@ -14,7 +15,7 @@ def login_page(request):
 def home_page(request):
     # return HttpResponse('Home Page')
     # courses = Course.objects.filter(featured=True)[:1] # limit items
-    courses = Course.objects.all()
+    courses = Course.objects.order_by('-id')
     context = {
         'page_title' : 'Home Page',
         'courses':courses
@@ -29,6 +30,16 @@ def about_page(request):
     return render(request, 'about.html' , context)
 
 def contact(request):
+
+    if request.method == 'POST':
+        name = request.POST.get('name'),
+        email = request.POST.get('email'),
+        phone = request.POST.get('phone'),
+        message = request.POST.get('message')
+        data = [name, email, phone,message]
+        return HttpResponse(data)
+
+   
     context = {
         'page_title' : 'Contact'
     }
@@ -55,3 +66,18 @@ def course(request, course_title):
     }
 
     return render(request, 'course.html', context)
+
+def create_course(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST, request.FILES)
+        if form.is_valid(): # not only validation rules - form not crashed
+            form.save()
+            return redirect('home')
+    else:
+        form = CourseForm()
+
+    context  = {
+        'page_title':'Create Course',
+        'form': form
+    }
+    return render(request, 'create_course.html', context)
