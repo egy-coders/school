@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html' %}
+{% block title %} {{page_title}} {% endblock %}
+
+{% block content %}
+<h3>Create New Student</h3>
+<hr>
+<div class="container p-4 d-flex justify-content-center">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for field in form %}
+        <div class="my-2">
+            {{field.label_tag}}
+            {{field}}
+
+            {% if field.errors %}
+            <div class="text-danger small">
+                {% for error in field.errors %}
+                {{error}}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+</div>
+{% endblock %}

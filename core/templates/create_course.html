@@ -9,7 +9,20 @@
         <div class="col-6">
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.as_p}}
+                {% for field in form %}
+                <div class="my-2">
+                    {{field.label_tag}}
+                    {{field}}
+
+                    {% if field.errors %}
+                    <div class="text-danger small">
+                        {% for error in field.errors %}
+                            {{error}}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>
         </div>

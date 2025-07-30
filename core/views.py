@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import HttpResponse
+from django.contrib import messages
 from .models import *
 from .forms import *
 
@@ -72,7 +73,10 @@ def create_course(request):
         form = CourseForm(request.POST, request.FILES)
         if form.is_valid(): # not only validation rules - form not crashed
             form.save()
+            messages.success(request, 'Course Saved Successfully')
             return redirect('home')
+        else:
+            messages.error(request, "Failed to saved course")
     else:
         form = CourseForm()
 
@@ -81,3 +85,22 @@ def create_course(request):
         'form': form
     }
     return render(request, 'create_course.html', context)
+
+
+def create_student(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST) 
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Student Saved Successfully') # success
+            return redirect('home')
+        else:
+            messages.error(request, 'Failed to save student') # error
+    else:
+        form = StudentForm()
+
+    context = {
+        'page_title':'Create Student',
+        'form':form
+    }
+    return render(request, 'create_student.html', context)

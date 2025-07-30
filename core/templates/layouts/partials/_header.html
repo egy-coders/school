@@ -15,7 +15,12 @@
                     class="nav-link {% if page_title == 'About Us' %} active {% endif %}">About</a></li>
             <li class="nav-item"><a href="{% url 'contact' %}"
                     class="nav-link {% if page_title == 'Contact' %} active {% endif %}">Contact</a></li>
-            <li class="nav-item"><a href="{% url 'create_course' %} {% if page_title == 'Create Course' %} active {% endif %}" class="nav-link">Create Course</a></li>
+            <li class="nav-item"><a
+                    href="{% url 'create_course' %} {% if page_title == 'Create Course' %} active {% endif %}"
+                    class="nav-link">Create Course</a></li>
+            <li class="nav-item"><a
+                    href="{% url 'create_student' %} {% if page_title == 'Create Student' %} active {% endif %}"
+                    class="nav-link">Create Student</a></li>
             <li class="nav-item"><a href="{% url 'login' %}" class="nav-link">Login</a></li>
         </ul>
     </header>

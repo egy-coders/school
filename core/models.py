@@ -1,6 +1,6 @@
 from django.db import models
 from django_cleanup import cleanup
-
+from django.core.validators import RegexValidator
 """
 Network one (category) - many (courses)  (CCNA - MSCE - Networking)
 Web Development (Django - Flask - ...) # CASCADE - SET_NULL
@@ -72,10 +72,10 @@ class Course(models.Model): # Many Side - child
         ('advanced', 'advanced'),
     )
     cat = models.ForeignKey(Cat, on_delete=models.SET_NULL, related_name="courses", null=True, blank=True) # cat_id
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=50)
     level = models.CharField(choices=LEVEL_CHOICES)
     description = models.TextField(null=True, blank=True)
-    price = models.IntegerField()
+    price = models.DecimalField(max_digits=5, decimal_places=2 , default=0.00) # 999.99
     featured = models.BooleanField(default=False) # course not featured
     image = models.ImageField(upload_to='course_images', null=True, blank=True)
     publish_on = models.DateTimeField()
@@ -96,7 +96,14 @@ class Student(models.Model):
         ('4th','4th'),
 
     )
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=200,
+                validators=[
+                        RegexValidator(
+                            r'^[\u0621-\u064A\s]+$', # arabic
+                            message='من فضلك أدخل الإسم باللغة العربية'
+                        )
+                    ]) # default required
+    email = models.EmailField(null=True, blank=True)
     dob = models.DateField(blank=True, null=True)
     grade = models.CharField(choices=GRADE_CHOICES)
     courses = models.ManyToManyField(Course, through='StudentCourse', related_name='students')
@@ -108,7 +115,7 @@ class StudentCourse(models.Model):
     # id
     student = models.ForeignKey(Student, on_delete=models.CASCADE) # student_id 
     course = models.ForeignKey(Course, on_delete=models.CASCADE)   # course_id
-    score = models.DecimalField(max_digits=5, decimal_places=2) # 100.00
+    score = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True) # 100.00
 
     class Meta: # options 
         verbose_name = 'Enrollement'
