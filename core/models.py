@@ -96,13 +96,7 @@ class Student(models.Model):
         ('4th','4th'),
 
     )
-    name = models.CharField(max_length=200,
-                validators=[
-                        RegexValidator(
-                            r'^[\u0621-\u064A\s]+$', # arabic
-                            message='من فضلك أدخل الإسم باللغة العربية'
-                        )
-                    ]) # default required
+    name = models.CharField(max_length=200) # default required
     email = models.EmailField(null=True, blank=True)
     dob = models.DateField(blank=True, null=True)
     grade = models.CharField(choices=GRADE_CHOICES)

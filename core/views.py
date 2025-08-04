@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.shortcuts import HttpResponse
+from django.urls import reverse
 from django.contrib import messages
 from .models import *
 from .forms import *
@@ -7,6 +8,8 @@ from .forms import *
 # Create your views (controller) here.
 """
 Students - courses - exams
+CRUD 
+Create Read Update Delete (generic views) - view sets API 
 """
 # login() function built in django - operation login (authetication)
 # login page to display the html login page
@@ -46,21 +49,12 @@ def contact(request):
     }
     return render(request, 'contact.html' , context)
 
-def course(request, course_id):
-    context ={
-        'id':1,
-        'title':'python',
-        'price':'220'
-    }
-    return render(request, 'course.html',context)
-
-
 def student_profile(request):
     return render(request, 'students/profile.html')
 
-
-def course(request, course_title):
-    course = Course.objects.get(title=course_title) # more than one record - error
+# Display Single Course
+def course(request, course_id): # id (int) = pk (str) 1 = '1'
+    course = get_object_or_404(Course, id=course_id)
     context = {
         'course':course,
         'page_title' : course.title
@@ -84,7 +78,7 @@ def create_course(request):
         'page_title':'Create Course',
         'form': form
     }
-    return render(request, 'create_course.html', context)
+    return render(request, 'course_form.html', context)
 
 
 def create_student(request):
@@ -104,3 +98,41 @@ def create_student(request):
         'form':form
     }
     return render(request, 'create_student.html', context)
+
+def update_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id) # course object
+    if request.method == 'POST':
+        form = CourseForm(request.POST, request.FILES, instance=course)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Course updated!')
+            return redirect('course', course.id)
+        else:
+            messages.error(request, 'Failed to update')
+    else:
+        form = CourseForm(instance=course)
+    
+    context = {
+        'page_title':f'Update Course {course.title}',
+
+        'form': form,
+        'course':course,
+    }
+
+    return render(request, 'course_form.html', context)
+
+def delete_course(request, course_id):
+    course = get_object_or_404(Course, id=course_id) # retreive from database
+    previous_url = request.META.get("HTTP_REFERER", reverse('home'))
+    if request.method == 'POST':
+        course.delete()
+        messages.success(request, f"{course.title} deleted successfully!")
+        return redirect("home")
+    
+    context = {
+        'course':course,
+        'page_title':f'Delete {course.title}',
+        'previous_url' : previous_url
+    }
+
+    return render(request, 'confirm_delete.html', context)

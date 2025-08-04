@@ -56,7 +56,7 @@ class CourseForm(forms.ModelForm):
 
     def clean_description(self):
         description = self.cleaned_data.get('description')
-        if not 5 <= len(description) <= 50: 
+        if not 5 <= len(description) <= 500: 
             raise ValidationError("Course Description must be between 5 and 50 chars")
         return description
     
